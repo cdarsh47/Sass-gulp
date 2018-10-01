@@ -1,0 +1,57 @@
+$parent:"main";$check:"#ccc";
+$type:"under";$grid-width: 40px;
+$gutter-width: 10px;
+@mixin head-sec($selector){
+	.sc_main #{$selector}{
+		color: #010203 + #040506; 
+		width : 10px + ( 25px * 2);
+	}
+}
+$values:(#000000,#ff00ff,13px,1px);
+@mixin colors($color,$background,$size,$border){
+	color:$color;
+	background-color:$background;
+	font-size:$size;
+	border: $border solid $color;
+}
+@function cc($selector){
+	@return $selector + $grid-width;
+}
+@function grid-width($n) {
+  @return $n * $grid-width + ($n - 1) * $gutter-width;
+}
+body{background-color:$check}
+.#{$parent}{
+	text-align:center; 
+	p{
+		font:{
+		  family:arial;
+		  size:15px;
+		  weight:bold;
+		}
+		border:1px solid #eee;
+		&:hover{text-decoration:underline;}
+	}
+}
+@include head-sec("h2");
+%shared{cursor:pointer;}
+.exi_sc{font-weight:bold;@extend %shared;}
+.example{color:#ff0000; @extend .exi_sc}
+.sc_main{
+	.exi{
+		font-size:10px;
+		@extend .example;
+		@if $type=="none"{
+			text-decoration:none;
+		} @else if $type="under"{
+			text-decoration:underline;
+		}
+		width: grid-width(5);
+		height: cc(10);
+		@include head-sec("h2");
+	}
+}
+.third_main{
+	@include colors($values...);
+	@extend %shared;
+}
